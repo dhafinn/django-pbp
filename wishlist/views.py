@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 @login_required(login_url='/wishlist/login/')
@@ -80,8 +81,10 @@ def show_wishlist_ajax(request):
     }
     return render(request, "wishlist_ajax.html",context)
 
+@csrf_exempt
 def post_ajax(request):
     if request.method == 'POST':
+        print("halo")
         nama_barang = request.POST.get("nama_barang")
         harga_barang = request.POST.get("harga_barang")
         deskripsi = request.POST.get("deskripsi")
